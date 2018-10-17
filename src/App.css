@@ -1,32 +1,40 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  label input[type="checkbox"] {
+    display: none;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .custom-checkbox {
+    margin-left: 2em;
+    position: relative;
+    cursor: pointer;
   }
-}
+  
+  .custom-checkbox .glyphicon {
+    color: gold;
+    position: absolute;
+    top: 0.2em;
+    left: -1.25em;
+    font-size: 14px
+
+  }
+  
+  .custom-checkbox .glyphicon-star-empty {
+    color: gray;
+  }
+  
+  .custom-checkbox .glyphicon-star {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .custom-checkbox:hover .glyphicon-star{
+    opacity: 0.5;
+  }
+  
+  .custom-checkbox input[type="checkbox"]:checked ~ .glyphicon-star {
+    opacity: 1;
+  }
+
+  .well .hidden {
+      display:none;
+  }
+  
