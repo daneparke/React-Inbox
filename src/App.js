@@ -11,9 +11,9 @@ class App extends Component {
     this.state = {
       messages: [],
       selectedCount: 0,
+      composeMessage: true,
     }
   }
-
 
   async componentDidMount() {
     let result = await fetch('http://localhost:8082/api/messages')
@@ -23,13 +23,44 @@ class App extends Component {
     })
   }
 
+  toggleMessage = () => {
+    if (this.state.composeMessage === true) {
+      this.setState({
+        composeMessage: false
+      })
+    } else {
+      this.setState({
+        composeMessage: true
+      })
+    }
+  }
 
+  // markAsRead = async (unreadSelected) => {
+  //   var patch = {
+  //     messageIds: unreadSelected,
+  //     command: 'read',
+  //     read: true
+  //   }
+
+  //   const response = await fetch('http://localhost:8082/api/messages', {
+  //     method: 'PATCH',
+  //     body: JSON.stringify(patch),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json',
+  //     }
+  //   })
+  //   const posted = await response.json()
+  //   this.setState({
+  //     initialMessages: posted
+  //   })
+  // }
 
   render() {
     return (
       <>
-        <Toolbar />
-        <Message />
+        <Toolbar messages={this.state.messages} toggleMessage={this.toggleMessage} composeMessage={this.state.composeMessage} />
+        <Message composeMessage={this.state.composeMessage} />
         <MessageList messages={this.state.messages} />
       </>
 
