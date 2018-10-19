@@ -2,40 +2,21 @@ import React from 'react'
 
 const MessageList = (props) => {
 
-    // const showBody = () => {
-    //     var menuRow = document.querySelectorAll('.message-body')
-    //     for (var i = 0; i < menuRow.length; i++) {
-    //         menuRow[i].addEventListener('click', function (event) {
-    //             if (event.target.parentNode.classList.contains('hidden')) {
-    //                 event.target.parentNode.classList.remove('hidden')
-    //             } else if (event.target.classList.contains('hidden')) {
-    //                 event.target.classList.remove('hidden')
-    //             } else if (event.target.classList.contains('menuRows')) {
-    //                 event.target.classList.add('hidden')
-    //             } else if (event.target.parentNode.classList.contains('menuRows')) {
-    //                 event.target.parentNode.classList.add('hidden')
-    //             }
-    //         })
-    //     }
-    //     return showBody
-    // }
-
-
-
-
     var messages = props.messages.map(message => {
         return (
-            <div>
+            <div id={message.id}>
                 <div
                     // onClick={this.showBody} 
                     className={`row message ${message.read ? 'read' : 'unread'} ${message.selected ? 'selected' : ''}`}>
                     <div className="col-xs-1">
                         <div className="row">
                             <div className="col-xs-2">
-                                <input type="checkbox" />
+                                <input type="checkbox" id={message.id}
+                                    checked={`${message.selected ? 'true' : ''}`}
+                                />
                             </div>
                             <div className="col-xs-2">
-                                <i className={`star fa ${message.starred ? 'fa-star-o' : 'fa-star'}`}></i>
+                                <i id={message.id} onClick={props.markStarred} className={`star fa ${message.starred ? 'fa-star-o' : 'fa-star'}`}></i>
                             </div>
                         </div>
                     </div>

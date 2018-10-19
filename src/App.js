@@ -12,6 +12,9 @@ class App extends Component {
       messages: [],
       selectedCount: 0,
       composeMessage: true,
+      selectedMail: [
+        { 1: { selected: false, showbody: false } }
+      ],
     }
   }
 
@@ -35,33 +38,90 @@ class App extends Component {
     }
   }
 
-  // markAsRead = async (unreadSelected) => {
-  //   var patch = {
-  //     messageIds: unreadSelected,
-  //     command: 'read',
-  //     read: true
-  //   }
+  markStarred = async (event) => {
+    var patch = {
+      messageIds: [event.target.id],
+      command: 'star',
+      star: true,
+    }
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    this.setState({
+      messages: posted
+    })
+  }
 
-  //   const response = await fetch('http://localhost:8082/api/messages', {
-  //     method: 'PATCH',
-  //     body: JSON.stringify(patch),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json',
-  //     }
-  //   })
-  //   const posted = await response.json()
-  //   this.setState({
-  //     initialMessages: posted
-  //   })
-  // }
+  addLabel = async (event) => {
+    var patch = {
+      messageIds: [6],
+      command: 'addLabel',
+      label: event.target.value
+    }
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    this.setState({
+      messages: posted
+    })
+  }
 
+  removeLabel = async (event) => {
+    var patch = {
+      messageIds: [6],
+      command: 'removeLabel',
+      label: event.target.value
+    }
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    this.setState({
+      messages: posted
+    })
+  }
+  deleteMail = async () => {
+    var patch = {
+      messageIds: [5],
+      command: 'delete',
+    }
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    this.setState({
+      messages: posted
+    })
+  }
   render() {
     return (
       <>
-        <Toolbar messages={this.state.messages} toggleMessage={this.toggleMessage} composeMessage={this.state.composeMessage} />
+        <Toolbar deleteMail={this.deleteMail} unreadCount={this.state.unreadCount} messages={this.state.messages} toggleMessage={this.toggleMessage} composeMessage={this.state.composeMessage}
+          addLabel={this.addLabel} removeLabel={this.removeLabel} />
         <Message composeMessage={this.state.composeMessage} />
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} markStarred={this.markStarred} />
       </>
 
     );
