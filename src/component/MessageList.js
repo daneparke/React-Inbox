@@ -12,11 +12,11 @@ const MessageList = (props) => {
                         <div className="row">
                             <div className="col-xs-2">
                                 <input type="checkbox" id={message.id}
-                                    checked={`${message.selected ? 'true' : ''}`}
+                                    onClick={props.selectMail} checked={`${message.selected ? 'true' : ''}`}
                                 />
                             </div>
                             <div className="col-xs-2">
-                                <i id={message.id} onClick={props.markStarred} className={`star fa ${message.starred ? 'fa-star-o' : 'fa-star'}`}></i>
+                                <i id={message.id} onClick={props.markStarred} className={`star fa ${message.starred ? 'fa-star' : 'fa-star-o'}`}></i>
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@ const MessageList = (props) => {
                         <span className="label label-warning">{message.labels[1]}</span>
                         <span className="label label-warning">{message.labels[2]}</span>
 
-                        <a href="#"
+                        <a
                         >{message.subject}</a>
                     </div>
                 </div>

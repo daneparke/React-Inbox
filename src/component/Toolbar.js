@@ -7,7 +7,6 @@ const Toolbar = (props) => {
         if (unread.read === false) {
             count += 1
         }
-
     }
     )
     return (
@@ -15,17 +14,19 @@ const Toolbar = (props) => {
             <div className="row toolbar">
                 <div className="col-md-12">
                     <p className="pull-right">
-                        <span className="badge badge">{count}</span>
+                        <span className="badge badge">
+                            {count}
+                        </span>
                         unread messages
                     </p>
                     <a onClick={props.toggleMessage} className="btn btn-danger">
                         <i className={`fa ${props.composeMessage ? 'fa-plus' : 'fa-minus'}`}></i>
                     </a>
-                    <button className="btn btn-default">
-                        <i className="fa fa-minus-square-o"></i>
+                    <button onClick={props.selectAll} className="btn btn-default">
+                        <i className={`fa ${props.allSelected ? 'fa-check-square-o' : props.someSelected ? 'fa-minus-square-o' : 'fa-square-o'}`}></i>
                     </button>
-                    <button className="btn btn-default">Mark As Read</button>
-                    <button className="btn btn-default">Mark As Unread</button>
+                    <button onClick={props.markRead} className="btn btn-default">Mark As Read</button>
+                    <button onClick={props.markUnread} className="btn btn-default">Mark As Unread</button>
                     <select onChange={props.addLabel} className="form-control label-select">
                         <option selected disabled>Apply label</option>
                         <option value="dev">dev</option>
