@@ -173,6 +173,10 @@ class App extends Component {
     this.setState({
       messages: [...data],
     })
+    this.setState({
+      allSelected: false,
+      someSelected: false,
+    })
   }
   subject = (event) => {
     this.setState({
@@ -209,18 +213,6 @@ class App extends Component {
       })
   }
   selectMail = async (event) => {
-    // let selecters = []
-    // this.state.messages.map(item => {
-    //   if (item.selected === true) {
-    //     selecters.push(item.id)
-    //   }
-    // })
-    // var patch = {
-    //   messageIds: selecters,
-    //   command: 'select',
-    //   read: true,
-
-    // }
     var patch = {
       messageIds: [event.target.id],
       command: 'select',
@@ -243,7 +235,6 @@ class App extends Component {
       } else {
         item.selected = false
       }
-
       return item
     })
     if (selectCount === this.state.messages.length) {
@@ -277,7 +268,6 @@ class App extends Component {
       messageIds: selecters,
       command: 'read',
       read: true,
-
     }
     const response = await fetch('http://localhost:8082/api/messages', {
       method: 'PATCH',
@@ -407,47 +397,10 @@ class App extends Component {
     }
 
   }
-
-  // let selecters = []
-  // this.state.messages.map(item => {
-  //   selecters.push(item.id)
-  // })
-  // var patch = {
-  //   messageIds: selecters,
-  //   command: 'select',
-  //   selected:true
-  // }
-
-  // const response = await fetch('http://localhost:8082/api/messages', {
-  //   method: 'PATCH',
-  //   body: JSON.stringify(patch),
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //   }
-  // })
-  // const posted = await response.json()
-  // let data = posted.map(item => {
-  //   if (item.selected === true) {
-  //     item.selected = true
-  //   } else {
-  //     item.selected = false
-  //   }
-  //   return item
-  // })
-  // this.setState({
-  //   messages: [...data],
-  // })
-
-
-
-
-
-
   render() {
     return (
       <>
-        <Toolbar allSelected={this.state.allSelected}
+        <Toolbar plural={this.state.plural} allSelected={this.state.allSelected}
           someSelected={this.state.someSelected}
           selectAll={this.selectAll} markUnread={this.markUnread} markRead={this.markRead} deleteMail={this.deleteMail} unreadCount={this.state.unreadCount} messages={this.state.messages} toggleMessage={this.toggleMessage} composeMessage={this.state.composeMessage}
           addLabel={this.addLabel} removeLabel={this.removeLabel} />

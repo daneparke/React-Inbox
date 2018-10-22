@@ -3,12 +3,17 @@ import React from 'react'
 const Toolbar = (props) => {
 
     var count = 0;
+    var plural = false;
     props.messages.map(unread => {
         if (unread.read === false) {
             count += 1
         }
     }
     )
+    if (count === 1) {
+        plural = true;
+    }
+
     return (
         <>
             <div className="row toolbar">
@@ -17,7 +22,8 @@ const Toolbar = (props) => {
                         <span className="badge badge">
                             {count}
                         </span>
-                        unread messages
+                        {`unread message${plural ? '' : 's'}`}
+                        {/* unread messages */}
                     </p>
                     <a onClick={props.toggleMessage} className="btn btn-danger">
                         <i className={`fa ${props.composeMessage ? 'fa-plus' : 'fa-minus'}`}></i>
