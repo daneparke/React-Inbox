@@ -4,9 +4,9 @@ const MessageList = (props) => {
 
     var messages = props.messages.map(message => {
         return (
-            <div id={message.id}>
+            <div>
                 <div
-                    // onClick={this.showBody} 
+                    id={message.id}
                     className={`row message ${message.read ? 'read' : 'unread'} ${message.selected ? 'selected' : ''}`}>
                     <div className="col-xs-1">
                         <div className="row">
@@ -25,11 +25,11 @@ const MessageList = (props) => {
                         <span className="label label-warning">{message.labels[1]}</span>
                         <span className="label label-warning">{message.labels[2]}</span>
 
-                        <a
+                        <a id={message.id} onClick={props.showBody}
                         >{message.subject}</a>
                     </div>
                 </div>
-                <div className="row message-body hidden">
+                <div className={`row message-body ${message.shown ? '' : 'hidden'}`}>
                     <div className="col-xs-11 col-xs-offset-1">
                         {message.body}
                     </div>

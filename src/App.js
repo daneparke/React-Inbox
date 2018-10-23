@@ -45,6 +45,33 @@ class App extends Component {
       })
     }
   }
+  showBody = async (event) => {
+    var patch = {
+      messageIds: [event.target.id],
+      command: 'shown',
+    }
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+    const posted = await response.json()
+    let data = posted.map(item => {
+      if (item.selected === true) {
+        item.selected = true
+      } else {
+        item.selected = false
+      }
+      return item
+    })
+    this.setState({
+      messages: [...data],
+    })
+
+  }
 
   markStarred = async (event) => {
     var patch = {
@@ -194,6 +221,7 @@ class App extends Component {
       read: false,
       selected: false,
       starred: false,
+      shown: false,
       labels: [],
       body: this.state.body,
       id: (this.state.messages.length)
@@ -232,6 +260,7 @@ class App extends Component {
       if (item.selected === true) {
         item.selected = true
         selectCount++
+
       } else {
         item.selected = false
       }
@@ -405,7 +434,7 @@ class App extends Component {
           selectAll={this.selectAll} markUnread={this.markUnread} markRead={this.markRead} deleteMail={this.deleteMail} unreadCount={this.state.unreadCount} messages={this.state.messages} toggleMessage={this.toggleMessage} composeMessage={this.state.composeMessage}
           addLabel={this.addLabel} removeLabel={this.removeLabel} />
         <Message sendMessage={this.sendMessage} body={this.body} subject={this.subject} composeMessage={this.state.composeMessage} />
-        <MessageList selectedMail={this.state.selectedMail} selectMail={this.selectMail} messages={this.state.messages} markStarred={this.markStarred} />
+        <MessageList showBody={this.showBody} selectedMail={this.state.selectedMail} selectMail={this.selectMail} messages={this.state.messages} markStarred={this.markStarred} />
       </>
 
     );
